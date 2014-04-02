@@ -1,0 +1,4 @@
+<?
+	class Page extends AppModel {
+	}
+?>

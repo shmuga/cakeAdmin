@@ -1,0 +1,4 @@
+<?
+class Currency extends AppModel{    
+}
+?>

@@ -1,0 +1,5 @@
+<?
+class Catalog extends AppModel{
+   
+}
+?>
