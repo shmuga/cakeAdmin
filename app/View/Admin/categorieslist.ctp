@@ -1,3 +1,4 @@
+<div style="font-style:bold;font-size:24px;"><?=$title['Catalog']['title']?></div>    <br/>
 <div class="row">
     <div class="col-md-12">
         <p>

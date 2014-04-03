@@ -1,6 +1,8 @@
+<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/plugins/ckfinder/ckfinder.js"></script>
 <div class="row">
     <div class="col-md-12">
-        <form action="" method="post" role="form">
+        <form action="" method="post" role="form" id="frm">
             <div class="form-group" style="width: 500px;">
             <label>Название:</label>
             <?php echo $this->Form->input($models['good'] . '.name', array('div' => false, 'label'=>false, 'size' => '50', 'class'=>'form-control'))?>
@@ -30,29 +32,50 @@
                 <?php
                     $this->Tree->genTreeRadio($models['category'], $category ,array($models['good'],$name . "s_category_id"));        
                 ?>
-            </div>   
+            </div>  
             
             <?if(array_search("image", $fields) !== false):?>
                 <div class="form-group" style="width: 500px;">
                 <label>Картинка:</label>
-                <?php echo $this->Form->input($models['good'] . '.image', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
+                <?php echo $this->Form->input($models['good'] . '.image', array('div' => false, 'label'=>false, 'class'=>'form-control','id' => 'image','onclick'=>"BrowseServer();"))?>                                
+                <script type="text/javascript">
+                                function BrowseServer()
+                                {
+                                    var finder = new CKFinder();
+                                    finder.basePath = '/js/ckfinder/';
+                                    finder.selectActionFunction = SetFileField;
+                                    finder.popup();
+                                }
+
+                                function SetFileField( fileUrl )
+                                {
+                                    document.getElementById( 'image' ).value = fileUrl;
+                                }
+                </script>
                 </div>
             <?endif;?>
            
            <?if(array_search("short_description", $fields) !== false):?>
-                <div class="form-group" style="width: 500px;">
+                <div class="form-group">
                 <label>Краткое описание:</label>
-                <?php echo $this->Form->input($models['good'] . '.short_description', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
+                <?php echo $this->Form->textarea($models['good'] . '.short_description', array('div' => false, 'label'=>false,'id'=>'short', 'class'=>'form-control ckeditor'))?>
                 </div>
+                <script>                
+                    var editor =CKEDITOR.replace( 'short' );
+                    CKFinder.setupCKEditor( editor, '/plugins/ckfinder/' );
+                </script>
             <?endif;?>
 
             <?if(array_search("description", $fields) !== false):?>
-                <div class="form-group" style="width: 500px;">
+                <div class="form-group">
                 <label>Описание:</label>
-                <?php echo $this->Form->input($models['good'] . '.description', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
+                <?php echo $this->Form->textarea($models['good'] . '.description', array('div' => false, 'label'=>false, 'id'=>'long','class'=>'form-control ckeditor'))?>
                 </div>
+                <script>                
+                    var editor =CKEDITOR.replace( 'long' );
+                    CKFinder.setupCKEditor( editor, '/plugins/ckfinder/' );
+                </script>
             <?endif;?>
-
             <?if(array_search("price", $fields) !== false):?>
                 <div class="form-group" style="width: 500px;">
                 <label>Цена:</label>
@@ -97,7 +120,7 @@
 
             <?if(array_search("string_1", $fields) !== false):?>
                 <div class="form-group" style="width: 500px;">
-                <label>Дополнительная строка 1:</label>
+                <label>Ссылка на видео:</label>
                 <?php echo $this->Form->input($models['good'] . '.string_1', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
                 </div>
             <?endif;?>
@@ -111,7 +134,7 @@
 
             <?if(array_search("number_1", $fields) !== false):?>
                 <div class="form-group" style="width: 500px;">
-                <label>Дополнительное число 1:</label>
+                <label>Рейтинг:</label>
                 <?php echo $this->Form->input($models['good'] . '.number_1', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
                 </div>
             <?endif;?>
@@ -125,7 +148,7 @@
               
                 
             <div class="form-actions">
-            <button type="submit" role="button" onclick="document.forms[0].submit();" class="btn btn-primary">Сохранить</button>
+            <button id="subm" type="submit" role="button" class="btn btn-primary">Сохранить</button>
             </div>
         </form>   
     </div>

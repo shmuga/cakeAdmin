@@ -94,6 +94,8 @@ class AdminController extends AppController {
                           `name` varchar(128) NOT NULL DEFAULT '',
                           `trans` varchar(128) NOT NULL DEFAULT '',
                           `meta` varchar(1024) NOT NULL DEFAULT '',
+                          `image` varchar(256) NOT NULL DEFAULT '',
+                          `description` varchar(2048) NOT NULL DEFAULT '',
                           `title` varchar(128) NOT NULL DEFAULT ''
                         ) COMMENT='' ENGINE='InnoDB';
         ");
@@ -258,8 +260,7 @@ class AdminController extends AppController {
     }
     
 
-    public function home(){
-        
+    public function home(){        
     }
 
     //user
@@ -310,6 +311,7 @@ class AdminController extends AppController {
     }
 
     public function userstatus($user,$status){
+        $this->_checkFunction($this->action);
         $user /= 1;
         $status /= 1;
         $this->_checkFunction($this->action);
@@ -387,8 +389,8 @@ class AdminController extends AppController {
     public function pageadd(){
         $this->_checkFunction($this->action);
         if ($handle = opendir(APP . "View/Layouts/")) {        
-            while (false !== ($entry = readdir($handle))) {
-                if (strlen($entry)>4){
+            while (false !== ($entry = readdir($handle))) {                
+                if (strlen($entry)>4 && strstr($entry,".ctp")){
                     $arr[$entry] = $entry;
                 }
             }
@@ -506,7 +508,7 @@ class AdminController extends AppController {
 
         if ($handle = opendir(APP . "View/Layouts/")) {        
             while (false !== ($entry = readdir($handle))) {
-                if (strlen($entry)>4){
+                if (strlen($entry)>4 && strstr($entry,".ctp")){
                     $arr[$entry] = $entry;
                 }
             }
@@ -588,6 +590,29 @@ class AdminController extends AppController {
 
     }
 
+
+    public function catalogedit($id){
+        $this->_checkFunction($this->action);
+        $id = $id / 1;        
+        if ($handle = opendir(APP . "View/Layouts/")) {        
+            while (false !== ($entry = readdir($handle))) {
+                if (strlen($entry)>4 && strstr($entry,".ctp")){
+                    $arr[$entry] = $entry;
+                }
+            }
+        }
+        $this->set('layouts', $arr);
+        if (!empty($this->request->data)){            
+            $this->request->data['Catalog']['id'] = $id;
+            $this->request->data['Catalog']['layout'] = $this->request->data['layout'];
+            $this->Catalog->save($this->request->data['Catalog']);
+            $this->redirect("/admin/cataloglist");
+        }else{
+            $this->request->data = $this->Catalog->findById($id);
+        }        
+    }
+
+
     public function catalogdelete($id){
         $this->_checkFunction($this->action);
         $catalog = $this->Catalog->findById($id);
@@ -609,7 +634,7 @@ class AdminController extends AppController {
     public function categorieslist($name){
         $this->_checkFunction($this->action);
         $models = $this->_loadModels($name);
-
+        $this->set("title",$this->Catalog->findByTrans($name));
         $this->set("name",$name);
         $this->set("models",$models);
         $this->set("items",$this->$models['category']->find('threaded', array('recursive' => 0)));        
@@ -640,8 +665,28 @@ class AdminController extends AppController {
     public function categoriesedit($name,$id){
         $this->_checkFunction($this->action);
         $models = $this->_loadModels($name);        
+        $models = $this->_loadModels($name);   
+        // debug($this->request->data);
+        $id /= 1;
+        if (empty($this->request->data)){   
+            $this->request->data= $this->$models['category']->findById($id);
+        }else{
+            unset($this->request->data['parent_id']);
+            $this->_clearWithoutStrip($this->request->data[$models['category']]);
+            $this->request->data[$models['category']]['id'] = $id;
+            if (isset($this->request->data[$models['category']]['name'])){
+                $this->request->data[$models['category']]['trans'] = $this->_strToUrl($this->request->data[$models['category']]['name']);                
+            }            
+            if($this->$models['category']->save($this->request->data[$models['category']])){
+                $this->redirect("/admin/categorieslist/".$name);
+            }else{
+                $this->Session->setFlash("Ошибка при сохранении");
+            }
+        }
+        $this->set("name",$name);
+        $this->set("models",$models);       
      
-    }
+     } 
 
     public function categoriesdelete($name,$id){
         $id /=1;
@@ -656,7 +701,7 @@ class AdminController extends AppController {
         $this->_checkFunction($this->action);
         $models = $this->_loadModels($name);        
         $name = $this->_clearString($name);
-
+        $this->set("title",$this->Catalog->findByTrans($name));
         $catalog = $this->Catalog->find("first",array("conditions" => array("Catalog.trans" => $name)));
         $this->set("catalog",$catalog);
 
@@ -795,7 +840,6 @@ class AdminController extends AppController {
 
         }
         else{
-            $this->request->data[$models['good']] = $this->_clearEmpty($this->request->data[$models['good']]);
             if (isset($this->request->data[$models['good']]['name'])){
                 $this->request->data[$models['good']]['trans'] = $this->_strToUrl($this->request->data[$models['good']]['name']);                
             }
@@ -831,7 +875,7 @@ class AdminController extends AppController {
             $this->request->data = $this->$models['good']->findById($id);
         }
         else{
-            $this->request->data[$models['good']] = $this->_clearWithoutStrip($this->request->data[$models['good']]);
+            $this->request->data[$models['good']] = $this->_clearEmpty($this->request->data[$models['good']]);
             if (isset($this->request->data[$models['good']]['name'])){
                 $this->request->data[$models['good']]['trans'] = $this->_strToUrl($this->request->data[$models['good']]['name']);                
             }
@@ -902,34 +946,6 @@ class AdminController extends AppController {
 
     public function createtree() {
         $this->set('cat', $this->StolikisCategory->find('threaded', array('recursive' => 0)));
-    }
-
-    public function changepassword(){
-        //перевірка на пустоту введених данних
-        if(!empty($this->request->data)){
-            $this->request->data = $this->_clearWithoutStrip($this->request->data);
-            // перевірка старого паролю  
-            if($this->User->find("all",array("conditions"=>array("User.id"=>$this->userData['User']['id'],"User.password"=>sha1($this->request->data['oldpass']))))){
-                // перевырка на однаковысть нових паролыв
-                if($this->request->data['newpassword'] === $this->request->data['newpasswordrepeat']){
-                    // перевірка на шаблон
-                    if(preg_match("/^([a-zA-Z,\.\-\?!]*)$/",$this->request->data['newpassword'])){
-                        $this->userData['User']['password'] = sha1($this->request->data['newpassword']);
-                        $this->User->save($this->userData['User']);
-                        unset($this->request->data);
-                        $this->Session->setFlash("Пароль сохранен успешно.");
-                    }else{
-                        $this->Session->setFlash("Введите пароль согласно шаблону.");
-                    }
-                }else{
-                    $this->Session->setFlash("Пароли не одинаковые.");
-                }
-            }else{
-                $this->Session->setFlash("Введите правильный старый пароль");                
-            }
-
-        }
-        $this->render();
     }
 }
 

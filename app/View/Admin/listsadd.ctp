@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/plugins/ckfinder/ckfinder.js"></script>
 <div class="row">
     <div class="col-md-12">
         <form action="" method="post" role="form">
@@ -23,11 +25,11 @@
             <?php echo $this->Form->textarea($models['good'] . '.meta', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
             </div>
             
-            <?if(array_search("image", $fields) !== false):?>                
+            <?if(array_search("image", $fields) !== false):?>
                 <div class="form-group" style="width: 500px;">
                 <label>Картинка:</label>
-                <?php echo $this->Form->input($models['good'] . '.image', array('div' => false, 'label'=>false, 'class'=>'form-control','id'=>'image' , 'onclick'=>"BrowseServer();"))?>
-                <script type="text/javascript" src="/plugins/ckfinder/ckfinder.js"></script>
+                <?php echo $this->Form->input($models['good'] . '.image', array('div' => false, 'label'=>false, 'class'=>'form-control','id' => 'image','onclick'=>"BrowseServer();"))?>
+                </div>                
                 <script type="text/javascript">
                                 function BrowseServer()
                                 {
@@ -42,21 +44,28 @@
                                     document.getElementById( 'image' ).value = fileUrl;
                                 }
                 </script>
-                </div>
             <?endif;?>
            
-           <?if(array_search("short_description", $fields) !== false):?>
-                <div class="form-group" style="width: 500px;">
+          <?if(array_search("short_description", $fields) !== false):?>
+                <div class="form-group">
                 <label>Краткое описание:</label>
-                <?php echo $this->Form->input($models['good'] . '.short_description', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
+                <?php echo $this->Form->textarea($models['good'] . '.short_description', array('div' => false, 'label'=>false,'id'=>'short', 'class'=>'form-control ckeditor'))?>
                 </div>
+                <script>                
+                    var editor =CKEDITOR.replace( 'short' );
+                    CKFinder.setupCKEditor( editor, '/plugins/ckfinder/' );
+                </script>
             <?endif;?>
 
             <?if(array_search("description", $fields) !== false):?>
-                <div class="form-group" style="width: 500px;">
+                <div class="form-group">
                 <label>Описание:</label>
-                <?php echo $this->Form->input($models['good'] . '.description', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
+                <?php echo $this->Form->textarea($models['good'] . '.description', array('div' => false, 'label'=>false, 'id'=>'long','class'=>'form-control ckeditor'))?>
                 </div>
+                <script>                
+                    var editor =CKEDITOR.replace( 'long' );
+                    CKFinder.setupCKEditor( editor, '/plugins/ckfinder/' );
+                </script>
             <?endif;?>
 
             <?if(array_search("price", $fields) !== false):?>
@@ -103,7 +112,7 @@
 
             <?if(array_search("string_1", $fields) !== false):?>
                 <div class="form-group" style="width: 500px;">
-                <label>Дополнительная строка 1:</label>
+                <label>Ссылка на видео:</label>
                 <?php echo $this->Form->input($models['good'] . '.string_1', array('div' => false, 'label'=>false, 'class'=>'form-control'))?>
                 </div>
             <?endif;?>

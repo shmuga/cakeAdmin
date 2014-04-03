@@ -1,0 +1,76 @@
+
+p {
+margin:0px auto;
+}
+
+body{
+	background-color: #ffffff;
+	background-repeat: no-repeat;
+	background-position: top center;
+	margin: 0 auto;
+	font-family: Century Gothic;
+	font-size:10pt;
+	color:#555555;
+	font-weight: normal;
+	}
+
+h1{
+	font-family: Century Gothic;
+	font-size:22pt;
+	color:#00bffe;
+	font-weight: 300;
+}
+
+h2{
+	font-family: Century Gothic;
+	font-size:20pt;
+	color:#00bffe;
+	font-weight: normal;
+}
+h3{
+	font-family: Century Gothic;
+	font-size:18pt;
+	color:#333333;
+	font-weight: normal;
+}
+h4{
+	font-family: Century Gothic;
+	font-size:11pt;
+	color:#1a1a1a;
+	font-weight: normal;
+}
+	
+
+
+
+a.ramka:link {background-color: #73a9c9; padding:10px 10px 10px 10px; border-radius: 6px 6px 6px 6px; color:#ffffff;text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+a.ramka:visited{padding:10px 10px 10px 10px; border-radius: 6px 6px 6px 6px; color:#ffffff;text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+a.ramka:hover{background-color: #3366ff; padding:10px 10px 10px 10px; border-radius: 6px 6px 6px 6px; color:#ffffff;text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+
+a.manager:link {color:#ffffff; text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:12pt;}
+a.manager:visited{color:#ffffff; text-decoration: underline; font-weight: normal; font-family: Century Gothic;font-size:12pt;}
+a.manager:hover{color:#ffffff; text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:12pt;}
+
+a.footer:link {color:#1a1a1a; text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+a.footer:visited{color:#1a1a1a; text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+a.footer:hover{color:#1a1a1a; text-decoration: underline; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+
+a.footer_blue:link {color:#1570a6; text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+a.footer_blue:visited{color:#1570a6; text-decoration: none; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+a.footer_blue:hover{color:#1a1a1a; text-decoration: underline; font-weight: normal; font-family: Century Gothic;font-size:10pt;}
+
+a.link:link {font-size:10pt; color:#1570a6; font-family:Century Gothic; font-weight:normal; text-decoration:none;}
+a.link:visited {font-size:10pt; color:#1570a6; font-family:Century Gothic; font-weight:normal; text-decoration:none;}
+a.link:hover {font-size:10pt; color:#1a1a1a; font-family:Century Gothic; font-weight:normal; text-decoration:underline;}
+
+a.listalka:link {font-size:12pt; color:#1570a6; font-family:Century Gothic; font-weight:normal; text-decoration:none;}
+a.listalka:visited {font-size:12pt; color:#1570a6; font-family:Century Gothic; font-weight:normal; text-decoration:none;}
+a.listalka:hover {font-size:12pt; color:#1a1a1a; font-family:Century Gothic; font-weight:normal; text-decoration:underline;}
+
+div.listalka {font-size:12pt; color:#1570a6; font-family:Century Gothic; font-weight:normal;}
+div.listalka {font-size:12pt; color:#1570a6; font-family:Century Gothic; font-weight:normal;}
+div.listalka {font-size:12pt; color:#1a1a1a; font-family:Century Gothic; font-weight:normal;}
+
+a.banner_left:link {font-size:12pt; color:#ffffff; font-family:Century Gothic; font-weight:normal; text-decoration:none; padding: 10px 15px;}
+a.banner_left:visited {font-size:12pt; color:#ffffff; font-family:Century Gothic; font-weight:normal; text-decoration:none; padding: 10px 15px;}
+a.banner_left:hover {font-size:12pt; color:#ffffff; font-family:Century Gothic; font-weight:normal; text-decoration:underline; padding: 10px 15px;}

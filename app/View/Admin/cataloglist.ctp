@@ -8,7 +8,8 @@
                 <tr>
                     <th >Название</th>
                     <th >Url</th>                    
-                    <th >Действия</th>                         
+                    <th >Шаблон</th>  
+                    <th >Действия</th>       
                 </tr>
             </thead> 
 
@@ -17,8 +18,10 @@
                 <tr>                     
                     <td><?=$value['Catalog']['name']?></td> 
                     <td><?=$value['Catalog']['trans']?></td> 
+                    <td><?=$value['Catalog']['layout']?></td> 
                     <td> 
-                        <a role="button" class="btn btn-primary btn-xs"  href="/admin/catalogdelete/<?=$value['Catalog']['id']?>" title="Удалить"><i class="glyphicon glyphicon-remove"></i></a
+                        <a role="button" class="btn btn-primary btn-xs" href="/admin/catalogedit/<?=$value['Catalog']['id']?>" title="Редактировать"><i class="glyphicon glyphicon-pencil"></i></a>                    
+                        <a role="button" class="btn btn-primary btn-xs"  href="/admin/catalogdelete/<?=$value['Catalog']['id']?>" title="Удалить"><i class="glyphicon glyphicon-remove"></i></a>                        
                     </td>                               
                 </tr> 
                 <?endforeach;?>

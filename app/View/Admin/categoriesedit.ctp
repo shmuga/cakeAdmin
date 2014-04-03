@@ -48,7 +48,7 @@
             </script>
 
             <div class="form-actions">
-            <button type="submit" role="button" class="btn btn-primary">Добавить</button>
+            <button type="submit" role="button" class="btn btn-primary">Сохранить</button>
             </div> 
         </form>   
     </div>

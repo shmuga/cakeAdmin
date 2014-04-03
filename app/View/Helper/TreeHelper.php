@@ -19,7 +19,8 @@
 					  		<?endif;?>
 							<span class="pull-right">
 								<a role="button" class="btn btn-primary btn-xs" href="/admin/categoriesadd/<?=substr(strtolower(str_replace("Category", "",$catalog)),0,-1)?>/<?=$value[$catalog]['id'];?>" title="Добавить подкатегорию"><i class="glyphicon glyphicon-arrow-down"></i></a>
-                				<a role="button" class="btn btn-primary btn-xs"  href="/admin/categoriesdelete/<?=substr(strtolower(str_replace("Category", "",$catalog)),0,-1)?>/<?=$value[$catalog]['id'];?>" title="Удалить текущую категорию"><i class="glyphicon glyphicon-remove"></i></a>
+								<a role="button" class="btn btn-primary btn-xs"  href="/admin/categoriesedit/<?=substr(strtolower(str_replace("Category", "",$catalog)),0,-1)?>/<?=$value[$catalog]['id'];?>" title="Удалить текущую категорию"><i class="glyphicon glyphicon-pencil"></i></a>
+                				<a role="button" class="btn btn-primary btn-xs"  href="/admin/categoriesdelete/<?=substr(strtolower(str_replace("Category", "",$catalog)),0,-1)?>/<?=$value[$catalog]['id'];?>" title="Удалить текущую категорию"><i class="glyphicon glyphicon-remove"></i></a>                				
 							</span>
 						</h4>
 					</div>
@@ -93,7 +94,6 @@
 
 		public function genTreeRadio($catalog, $data, $for) {
 			?>
-				<form>
 					<div class="panel-group" id="accordion">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -114,7 +114,6 @@
 							</div>
 						</div>
 					</div>
-				</form>
 			<?php
 		}
 	}
